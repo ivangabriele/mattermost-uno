@@ -1,0 +1,16 @@
+{
+  "name": "mattermost-browser-extension",
+  "version": "0.0.0",
+  "description": "Mattermost browser extension.",
+  "license": "MIT",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Ivan Gabriele",
+    "email": "ivan.gabriele@gmail.com",
+    "url": "https://www.ivangabriele.com"
+  }
+}
