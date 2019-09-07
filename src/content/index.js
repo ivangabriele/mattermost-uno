@@ -7,6 +7,13 @@ import themize from "./helpers/themize";
 import waitFor from "./helpers/waitFor";
 import updateCounters from "./libs/updateCounters";
 
+function safelyRemovePostNode($post) {
+  try {
+    removeNode($post);
+    // eslint-disable-next-line no-empty
+  } catch (err) {}
+}
+
 const LOOP_DELAY = 1000;
 
 const rootPostsWithReplies = [];
@@ -52,16 +59,18 @@ async function run() {
     if ($post.classList.contains("post--comment")) {
       if (findPostIndexWithId($post.id) !== -1) return;
 
-      const $postUserPicture = $post.querySelector("img.more-modal__image");
-      if ($postUserPicture === null) {
-        e("Posts Parsing", "I can't find the other root post reply user picture node.");
+      // const $postUserPicture = $post.querySelector("img.more-modal__image");
+      // if ($postUserPicture === null) {
+      //   e("Posts Parsing", "I can't find the other root post reply user picture node.");
+      //   safelyRemovePostNode($post);
 
-        return;
-      }
+      //   return;
+      // }
 
       const $postTime = $post.querySelector("time.post__time");
       if ($postTime === null) {
         e("Posts Parsing", "I can't find the other root post reply time node.");
+        safelyRemovePostNode($post);
 
         return;
       }
@@ -73,6 +82,7 @@ async function run() {
         const $postMessage = $post.querySelector(".post__link > span > .theme");
         if ($postMessage === null) {
           e("Posts Parsing", "I can't find the other root post reply message node.");
+          safelyRemovePostNode($post);
 
           return;
         }
@@ -81,6 +91,7 @@ async function run() {
         rootPostIndex = findPostIndexWithTheme(theme);
         if (rootPostIndex === -1) {
           e("Posts Parsing", "I can't find the other root post index for this reply.");
+          safelyRemovePostNode($post);
 
           return;
         }
@@ -90,29 +101,26 @@ async function run() {
         rootPostIndex = rootPostsWithReplies.length - 1;
         if (rootPostIndex === -1) {
           e("Posts Parsing", "I can't find the same root post index for this reply.");
+          safelyRemovePostNode($post);
 
           return;
         }
       }
 
       const parentRootPost = rootPostsWithReplies[rootPostIndex];
-      if (!parentRootPost.authors.includes($postUserPicture.src)) {
-        parentRootPost.authors.push($postUserPicture.src);
+      // if (!parentRootPost.authors.includes($postUserPicture.src)) {
+      //   parentRootPost.authors.push($postUserPicture.src);
 
-        if (
-          parentRootPost.authors.length > parentRootPost.count ||
-          parentRootPost.authors.length > 5
-        ) {
-          parentRootPost.authors.shift();
-        }
-      }
+      //   if (
+      //     parentRootPost.authors.length > parentRootPost.count ||
+      //     parentRootPost.authors.length > 5
+      //   ) {
+      //     parentRootPost.authors.shift();
+      //   }
+      // }
       parentRootPost.updatedAt = $postTime.dateTime;
 
-      try {
-        removeNode($post);
-      } catch (err) {
-        return;
-      }
+      safelyRemovePostNode($post);
 
       return;
     }
