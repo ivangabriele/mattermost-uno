@@ -9,6 +9,7 @@ import updateCounters from "./libs/updateCounters";
 
 const LOOP_DELAY = 1000;
 
+let previousFirstPostId = "";
 let previousLastPostId = "";
 
 /**
@@ -32,12 +33,14 @@ async function run() {
     return;
   }
 
+  const firstPostId = $posts[0].id;
   const lastPostId = $posts[$posts.length - 1].id;
-  if (lastPostId === previousLastPostId) {
+  if (firstPostId === previousFirstPostId && lastPostId === previousLastPostId) {
     setTimeout(run, LOOP_DELAY);
 
     return;
   }
+  previousFirstPostId = firstPostId;
   previousLastPostId = lastPostId;
 
   // eslint-disable-next-line no-underscore-dangle
