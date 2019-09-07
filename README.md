@@ -9,12 +9,15 @@ Unofficial browser extension bringing some Slack-like features into [Mattermost]
 
 - Chrome extension.
 - Hide post replies and add a add a Slack-like bar under the posts with replies.
+- Infinite scroll.
 
 ## Roadmap
 
 - Firefox extension.
 - Live extension counter.
 - Fix `Unchecked runtime.lastError` error.
+- Experimental authors pictures in replies counter block.
+- Customizable options.
 
 ---
 
