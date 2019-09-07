@@ -12,7 +12,7 @@
     "build:watch": "concurrently \"yarn build:background --watch\" \"yarn build:content --watch\"",
     "dev": "cross-env NODE_ENV=development yarn build:watch",
     "test": "yarn test:lint && yarn test:unit",
-    "test:lint": "eslint ./src/**",
+    "test:lint": "eslint ./src/**/*.js",
     "test:unit": "jest",
     "preversion": "yarn build && git add -f ./dist/*",
     "postversion": "git push origin HEAD && git push --tags && git rm --cached ./dist/*"
