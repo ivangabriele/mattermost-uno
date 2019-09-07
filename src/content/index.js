@@ -19,6 +19,7 @@ const LOOP_DELAY = 1000;
 const rootPostsWithReplies = [];
 let previousFirstPostId = "";
 let previousLastPostId = "";
+let $postList = null;
 
 const findPostIndexWithId = id => R.findIndex(R.propEq("id", id))(rootPostsWithReplies);
 const findPostIndexWithTheme = theme => R.findIndex(R.propEq("theme", theme))(rootPostsWithReplies);
@@ -42,6 +43,18 @@ async function run() {
     setTimeout(run, LOOP_DELAY);
 
     return;
+  }
+
+  const $newPostList = document.querySelector(".post-list-holder-by-time");
+  if ($newPostList !== null && $newPostList !== $postList) {
+    $postList = $newPostList;
+
+    $postList.addEventListener("scroll", () => {
+      if ($postList.scrollTop > 100) return;
+
+      const $loadMoreMessagesButton = document.querySelector("button.more-messages-text");
+      if ($loadMoreMessagesButton !== null) $loadMoreMessagesButton.click();
+    });
   }
 
   const firstPostId = $posts[0].id;
