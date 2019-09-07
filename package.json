@@ -14,7 +14,7 @@
     "test": "yarn test:lint && yarn test:unit",
     "test:lint": "eslint ./src/**",
     "test:unit": "jest",
-    "preversion": "yarn build && git add -f ./dist/index.d.ts ./dist/index.js",
+    "preversion": "yarn build && git add -f ./dist/*",
     "postversion": "git push origin HEAD && git push --tags && git rm --cached ./dist/index.d.ts ./dist/index.js"
   },
   "devDependencies": {
