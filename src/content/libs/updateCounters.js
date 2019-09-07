@@ -4,7 +4,7 @@ import e from "../helpers/e";
 import removeNodeChildren from "../helpers/removeNodeChildren";
 
 export default function updateCounters(rootPostsWithReplies) {
-  rootPostsWithReplies.forEach(({ $button, $node, authors, count, updatedAt }) => {
+  rootPostsWithReplies.forEach(({ $button, $node, /* authors, */ count, updatedAt }) => {
     const $rootPostContent = $node.querySelector(".post__body");
     if ($rootPostContent === null) {
       e("Root Posts Updating", "I can't find the root post content node.");
@@ -14,12 +14,12 @@ export default function updateCounters(rootPostsWithReplies) {
 
     // If the counter is already injected, we just need to update its values:
     if ($node.querySelector(".MattermostUno-counter") !== null) {
-      const $counterAuthors = $node.querySelector(".MattermostUno-counterAuthors");
-      if ($counterAuthors === null) {
-        e("Root Posts Updating", "I can't find the existing counter authors node.");
+      // const $counterAuthors = $node.querySelector(".MattermostUno-counterAuthors");
+      // if ($counterAuthors === null) {
+      //   e("Root Posts Updating", "I can't find the existing counter authors node.");
 
-        return;
-      }
+      //   return;
+      // }
 
       const $counterLink = $node.querySelector(".MattermostUno-counterLink");
       if ($counterLink === null) {
@@ -35,12 +35,12 @@ export default function updateCounters(rootPostsWithReplies) {
         return;
       }
 
-      removeNodeChildren($counterAuthors);
-      authors.forEach(uri => {
-        const $authorImage = document.createElement("img");
-        $authorImage.src = uri;
-        $counterAuthors.appendChild($authorImage);
-      });
+      // removeNodeChildren($counterAuthors);
+      // authors.forEach(uri => {
+      //   const $authorImage = document.createElement("img");
+      //   $authorImage.src = uri;
+      //   $counterAuthors.appendChild($authorImage);
+      // });
 
       removeNodeChildren($counterLink);
       const counterLinkText = `${count} repl${count > 1 ? "ies" : "y"}`;
@@ -59,14 +59,14 @@ export default function updateCounters(rootPostsWithReplies) {
     $counter.classList.add("MattermostUno-counter");
     $counter.addEventListener("click", () => $button.click());
 
-    const $counterAuthors = document.createElement("div");
-    $counterAuthors.classList.add("MattermostUno-counterAuthors");
-    authors.forEach(uri => {
-      const $authorImage = document.createElement("img");
-      $authorImage.src = uri;
-      $counterAuthors.appendChild($authorImage);
-    });
-    $counter.appendChild($counterAuthors);
+    // const $counterAuthors = document.createElement("div");
+    // $counterAuthors.classList.add("MattermostUno-counterAuthors");
+    // authors.forEach(uri => {
+    //   const $authorImage = document.createElement("img");
+    //   $authorImage.src = uri;
+    //   $counterAuthors.appendChild($authorImage);
+    // });
+    // $counter.appendChild($counterAuthors);
 
     const $counterLink = document.createElement("a");
     $counterLink.classList.add("MattermostUno-counterLink");
