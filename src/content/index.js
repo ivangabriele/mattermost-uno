@@ -9,8 +9,12 @@ import updateCounters from "./libs/updateCounters";
 
 const LOOP_DELAY = 1000;
 
+const rootPostsWithReplies = [];
 let previousFirstPostId = "";
 let previousLastPostId = "";
+
+const findPostIndexWithId = id => R.findIndex(R.propEq("id", id))(rootPostsWithReplies);
+const findPostIndexWithTheme = theme => R.findIndex(R.propEq("theme", theme))(rootPostsWithReplies);
 
 /**
  * TODO Get rid of the dirty retry hack.
@@ -43,14 +47,11 @@ async function run() {
   previousFirstPostId = firstPostId;
   previousLastPostId = lastPostId;
 
-  // eslint-disable-next-line no-underscore-dangle
-  const rootPostsWithReplies = [];
-  const findPostIndexWithTheme = theme =>
-    R.findIndex(R.propEq("theme", theme))(rootPostsWithReplies);
-
   $posts.forEach($post => {
     // If this post is a reply to a root post:
     if ($post.classList.contains("post--comment")) {
+      if (findPostIndexWithId($post.id) !== -1) return;
+
       const $postUserPicture = $post.querySelector("img.more-modal__image");
       if ($postUserPicture === null) {
         e("Posts Parsing", "I can't find the other root post reply user picture node.");
@@ -119,6 +120,13 @@ async function run() {
     const $rootPostCounter = $post.querySelector(".comment-count");
     if ($rootPostCounter === null) return;
 
+    const rootPostIndex = findPostIndexWithId($post.id);
+    if (rootPostIndex !== -1) {
+      rootPostsWithReplies[rootPostIndex].count = Number($rootPostCounter.innerText);
+
+      return;
+    }
+
     const $rootPostButtons = $post.querySelectorAll(".post__header--info button");
     if ($rootPostButtons.length === 0) {
       e("Posts Parsing", "I can't find the root post button node.");
@@ -140,6 +148,7 @@ async function run() {
       $node: $post,
       authors: [],
       count: Number($rootPostCounter.innerText),
+      id: $post.id,
       updatedAt: 0,
       theme: postTheme
     });
