@@ -1,6 +1,6 @@
 {
   "name": "mattermost-browser-extension",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Mattermost Uno browsers extension.",
   "license": "MIT",
   "private": true,
