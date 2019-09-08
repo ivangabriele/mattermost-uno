@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Mattermost Uno",
   "version": "1.2.0",
-  "description": "Unofficial Mattermost browser extension.",
+  "description": "Unofficial extension bringing some Slack-like features into Mattermost.",
   "background": {
     "persistent": false,
     "scripts": ["background.js"]
