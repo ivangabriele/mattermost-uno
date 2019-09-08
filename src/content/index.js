@@ -36,7 +36,7 @@ async function run() {
   let retries = 10;
 
   while ($posts.length === 0 && retries-- > 0) {
-    $posts = document.querySelectorAll(".post");
+    $posts = document.querySelectorAll(".post-list-holder-by-time .post");
 
     // eslint-disable-next-line no-await-in-loop
     await waitFor(400);

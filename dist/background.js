@@ -1,1 +1,0 @@
-!function(){"use strict";chrome.tabs.onUpdated.addListener((t,e,s)=>{const{status:r}=e;if("complete"!==r)return;const{url:o}=s;void 0!==o&&o.startsWith("https://mattermost.")&&(chrome.runtime.lastError||chrome.tabs.sendMessage(t,"areYouThere",async t=>{void 0===t&&(chrome.tabs.insertCSS({file:"content.css"}),chrome.tabs.executeScript({file:"content.js"}))}))})}();
