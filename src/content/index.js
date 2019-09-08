@@ -1,18 +1,24 @@
-import * as R from "ramda";
+import { findIndex, propEq } from "ramda";
 
 import e from "./helpers/e";
 import isColorLight from "./helpers/isColorLight";
-import removeNode from "./helpers/removeNode";
 import stripHtmlTags from "./helpers/stripHtmlTags";
 import themize from "./helpers/themize";
 import waitFor from "./helpers/waitFor";
 import updateCounters from "./libs/updateCounters";
 
-function safelyRemovePostNode($post) {
+function safelyHidePostNode($post) {
   try {
-    removeNode($post);
+    $post.classList.add("MattermostUno--hide");
     // eslint-disable-next-line no-empty
   } catch (err) {}
+}
+
+function watchPostListScroll() {
+  if (this.scrollTop > 100) return;
+
+  const $loadMoreMessagesButton = document.querySelector("button.more-messages-text");
+  if ($loadMoreMessagesButton !== null) $loadMoreMessagesButton.click();
 }
 
 const LOOP_DELAY = 1000;
@@ -23,8 +29,8 @@ let previousFirstPostId = "";
 let previousLastPostId = "";
 let themeHref = "";
 
-const findPostIndexWithId = id => R.findIndex(R.propEq("id", id))(rootPostsWithReplies);
-const findPostIndexWithTheme = theme => R.findIndex(R.propEq("theme", theme))(rootPostsWithReplies);
+const findPostIndexWithId = id => findIndex(propEq("id", id))(rootPostsWithReplies);
+const findPostIndexWithTheme = theme => findIndex(propEq("theme", theme))(rootPostsWithReplies);
 
 /**
  * TODO Get rid of the dirty retry hack.
@@ -77,14 +83,8 @@ async function run() {
   const $newPostList = document.querySelector(".post-list-holder-by-time");
   // If the post list node has changed:
   if ($newPostList !== null && $newPostList !== $postList) {
-    $postList = $newPostList;
-
-    $postList.addEventListener("scroll", () => {
-      if ($postList.scrollTop > 100) return;
-
-      const $loadMoreMessagesButton = document.querySelector("button.more-messages-text");
-      if ($loadMoreMessagesButton !== null) $loadMoreMessagesButton.click();
-    });
+    $postList = document.querySelector(".post-list-holder-by-time");
+    $postList.addEventListener("scroll", watchPostListScroll);
   }
 
   // ------------------------------------
@@ -112,7 +112,7 @@ async function run() {
       // const $postUserPicture = $post.querySelector("img.more-modal__image");
       // if ($postUserPicture === null) {
       //   e("Posts Parsing", "I can't find the other root post reply user picture node.");
-      //   safelyRemovePostNode($post);
+      //   safelyHidePostNode($post);
 
       //   return;
       // }
@@ -120,7 +120,7 @@ async function run() {
       const $postTime = $post.querySelector("time.post__time");
       if ($postTime === null) {
         e("Posts Parsing", "I can't find the other root post reply time node.");
-        safelyRemovePostNode($post);
+        safelyHidePostNode($post);
 
         return;
       }
@@ -132,7 +132,7 @@ async function run() {
         const $postMessage = $post.querySelector(".post__link > span > .theme");
         if ($postMessage === null) {
           e("Posts Parsing", "I can't find the other root post reply message node.");
-          safelyRemovePostNode($post);
+          safelyHidePostNode($post);
 
           return;
         }
@@ -141,7 +141,7 @@ async function run() {
         rootPostIndex = findPostIndexWithTheme(theme);
         if (rootPostIndex === -1) {
           e("Posts Parsing", "I can't find the other root post index for this reply.");
-          safelyRemovePostNode($post);
+          safelyHidePostNode($post);
 
           return;
         }
@@ -151,7 +151,7 @@ async function run() {
         rootPostIndex = rootPostsWithReplies.length - 1;
         if (rootPostIndex === -1) {
           e("Posts Parsing", "I can't find the same root post index for this reply.");
-          safelyRemovePostNode($post);
+          safelyHidePostNode($post);
 
           return;
         }
@@ -170,7 +170,7 @@ async function run() {
       // }
       parentRootPost.updatedAt = $postTime.dateTime;
 
-      safelyRemovePostNode($post);
+      safelyHidePostNode($post);
 
       return;
     }
