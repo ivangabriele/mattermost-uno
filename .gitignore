@@ -3,4 +3,6 @@
 
 /.vscode/settings.json
 
+*.crx
+*.pem
 *.zip
