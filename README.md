@@ -5,6 +5,11 @@
 
 Unofficial browser extension bringing some Slack-like features into [Mattermost][link-mattermost].
 
+## Usage
+
+Once installed, just click the Mattermost Uno browser extension icon on each of your Mattermost chat
+active tabs in order to enable it. You can also disable it by clicking it on.
+
 ## Links
 
 - [Chrome Extension][link-chrome]
