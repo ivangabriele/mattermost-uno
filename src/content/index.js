@@ -1,6 +1,7 @@
 import * as R from "ramda";
 
 import e from "./helpers/e";
+import isColorLight from "./helpers/isColorLight";
 import removeNode from "./helpers/removeNode";
 import stripHtmlTags from "./helpers/stripHtmlTags";
 import themize from "./helpers/themize";
@@ -17,9 +18,10 @@ function safelyRemovePostNode($post) {
 const LOOP_DELAY = 1000;
 
 const rootPostsWithReplies = [];
+let $postList = null;
 let previousFirstPostId = "";
 let previousLastPostId = "";
-let $postList = null;
+let themeHref = "";
 
 const findPostIndexWithId = id => R.findIndex(R.propEq("id", id))(rootPostsWithReplies);
 const findPostIndexWithTheme = theme => R.findIndex(R.propEq("theme", theme))(rootPostsWithReplies);
@@ -27,6 +29,7 @@ const findPostIndexWithTheme = theme => R.findIndex(R.propEq("theme", theme))(ro
 /**
  * TODO Get rid of the dirty retry hack.
  * TODO Try to discover a way to handle non-related replies declared as related ones.
+ * TODO Handle posts cache deletion case.
  */
 async function run() {
   let $posts = [];
@@ -45,7 +48,34 @@ async function run() {
     return;
   }
 
+  // ------------------------------------
+  // Theme
+
+  const $theme = document.querySelector("link.code_theme");
+  // If the theme has changed:
+  if ($theme !== null && $theme.href !== themeHref) {
+    themeHref = $theme.href;
+    const $appContent = document.querySelector(".app__content");
+
+    if ($appContent !== null) {
+      const appContentBackgroundColor = window
+        .getComputedStyle($appContent, null)
+        .getPropertyValue("background-color");
+
+      const themeIsLight = isColorLight(appContentBackgroundColor);
+      const className = "MattermostUno--dark";
+      const bodyHasDarkThemeClass = document.body.classList.contains(className);
+
+      if (themeIsLight && bodyHasDarkThemeClass) document.body.classList.remove(className);
+      if (!themeIsLight && !bodyHasDarkThemeClass) document.body.classList.add(className);
+    }
+  }
+
+  // ------------------------------------
+  // Infinite Scroll
+
   const $newPostList = document.querySelector(".post-list-holder-by-time");
+  // If the post list node has changed:
   if ($newPostList !== null && $newPostList !== $postList) {
     $postList = $newPostList;
 
@@ -57,8 +87,12 @@ async function run() {
     });
   }
 
+  // ------------------------------------
+  // Posts Cache
+
   const firstPostId = $posts[0].id;
   const lastPostId = $posts[$posts.length - 1].id;
+  // If the posts list hasn't changed:
   if (firstPostId === previousFirstPostId && lastPostId === previousLastPostId) {
     setTimeout(run, LOOP_DELAY);
 
@@ -66,6 +100,9 @@ async function run() {
   }
   previousFirstPostId = firstPostId;
   previousLastPostId = lastPostId;
+
+  // ------------------------------------
+  // Posts Parsing
 
   $posts.forEach($post => {
     // If this post is a reply to a root post:
