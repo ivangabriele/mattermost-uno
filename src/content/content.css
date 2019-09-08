@@ -1,3 +1,7 @@
+.MattermostUno--hide {
+  display: none;
+}
+
 .MattermostUno-counter {
   align-items: baseline;
   background-color: rgba(0, 0, 0, 0.05);
