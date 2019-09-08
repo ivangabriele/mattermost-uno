@@ -23,6 +23,23 @@ Unofficial browser extension bringing some Slack-like features into [Mattermost]
 - Experimental authors pictures in replies counter block.
 - Customizable options.
 
+## Contribute
+
+### Get Started
+
+```bash
+yarn
+yarn dev
+```
+
+Then load the `/dist` directory in your browser as an unpacked extension.
+
+### Release
+
+```bash
+yarn release [major|minor|patch|premajor|preminor|prepatch|prerelease]
+```
+
 ---
 
 [img-chrome]:
