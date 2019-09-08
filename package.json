@@ -24,6 +24,7 @@
     "@babel/preset-env": "7.5.5",
     "@babel/runtime": "7.5.5",
     "@types/chrome": "0.0.88",
+    "archiver": "3.1.1",
     "concurrently": "4.1.2",
     "coveralls": "3.0.6",
     "cross-env": "5.2.1",
