@@ -8,7 +8,7 @@ Unofficial browser extension bringing some Slack-like features into [Mattermost]
 ## Features
 
 - Chrome extension.
-- Hide post replies and add a add a Slack-like bar under the posts with replies.
+- Hide posts replies and add a add a Slack-like block under the posts containing replies.
 - Infinite scroll.
 
 ## Roadmap
