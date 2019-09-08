@@ -1668,6 +1668,11 @@ cross-spawn@^6.0.0, cross-spawn@^6.0.5:
     shebang-command "^1.2.0"
     which "^1.2.9"
 
+crx-hotreload@1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/crx-hotreload/-/crx-hotreload-1.0.4.tgz#227b1a8aa2ddfc5c29075ad2ee3e3bc37f7a239b"
+  integrity sha512-3mJMMbjoLhHmhNubyIPKmgLvr9V6UZ/yKaZW1WKb2n7yHs1R10VVCAUgQ00amR6fTmM/aiEvZHx+jzhSSf0CGA==
+
 cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   version "0.3.8"
   resolved "https://registry.yarnpkg.com/cssom/-/cssom-0.3.8.tgz#9f1276f5b2b463f2114d3f2c75250af8c1a36f4a"
