@@ -228,4 +228,5 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   }
 });
 
-run();
+const $mattermostMeta = document.querySelector(`meta[name="apple-mobile-web-app-title"]`);
+if ($mattermostMeta !== null && $mattermostMeta.content === "Mattermost") run();
