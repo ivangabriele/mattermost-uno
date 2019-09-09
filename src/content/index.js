@@ -170,15 +170,9 @@ async function loop() {
       }
 
       const parentRootPost = rootPostsWithReplies[rootPostIndex];
-      if (!parentRootPost.authors.includes($postUserPicture.src)) {
+      if (parentRootPost.authors[parentRootPost.authors.length - 1] !== $postUserPicture.src) {
         parentRootPost.authors.push($postUserPicture.src);
-
-        if (
-          parentRootPost.authors.length > parentRootPost.count ||
-          parentRootPost.authors.length > 5
-        ) {
-          parentRootPost.authors.shift();
-        }
+        if (parentRootPost.authors.length > 5) parentRootPost.authors.shift();
       }
       parentRootPost.updatedAt = $postTime.dateTime;
 
