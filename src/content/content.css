@@ -1,5 +1,5 @@
 .post-list-holder-by-time .post.post--root .post__body {
-  padding-bottom: 3.5rem;
+  padding-bottom: 3.75rem;
 }
 .post-list-holder-by-time .post.post--comment {
   display: none;
@@ -13,9 +13,10 @@
   cursor: pointer;
   display: flex;
   font-size: 1.2rem;
-  margin: -3rem 0 0 0.5rem;
+  line-height: 1.7;
+  margin: -3.25rem 0 0 0.5rem;
   width: 600px;
-  padding: 0.4rem 0.75rem 0.35rem;
+  padding: 0.25rem 1rem 0.35rem 0.45rem;
   position: absolute;
 }
 body.MattermostUno--dark .MattermostUno-counter {
