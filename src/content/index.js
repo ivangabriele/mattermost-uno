@@ -9,14 +9,8 @@ import updateCounters from "./libs/updateCounters";
 
 import { CHANNEL_MESSAGE } from "../constants";
 
-function watchPostListScroll() {
-  if (this.scrollTop > 100) return;
-
-  const $loadMoreMessagesButton = document.querySelector("button.more-messages-text");
-  if ($loadMoreMessagesButton !== null) $loadMoreMessagesButton.click();
-}
-
 const FAST_LOOP_DELAY = 400;
+const INFINITE_SCROLL_HEIGHT = 360;
 const LOOP_DELAY = 1000;
 
 let $postList = null;
@@ -31,12 +25,19 @@ let themeHref = "";
 const findPostIndexWithId = id => findIndex(propEq("id", id))(rootPostsWithReplies);
 const findPostIndexWithTheme = theme => findIndex(propEq("theme", theme))(rootPostsWithReplies);
 
+function watchPostListScroll() {
+  if (this.scrollTop > INFINITE_SCROLL_HEIGHT) return;
+
+  const $loadMoreMessagesButton = document.querySelector("button.more-messages-text");
+  if ($loadMoreMessagesButton !== null) $loadMoreMessagesButton.click();
+}
+
 // If the location path has changed:
 window.addEventListener(
   "hashchange",
   () => {
     // And the a loop is in progress, we clear it:
-    if (loopId !== -1) clearTimeout(loopId);
+    if (loopId !== -1) window.clearTimeout(loopId);
   },
   false
 );
@@ -58,7 +59,7 @@ async function loop() {
   }
 
   if ($posts.length === 0 && retries === -1) {
-    loopId = setTimeout(loop, LOOP_DELAY);
+    loopId = window.setTimeout(loop, LOOP_DELAY);
 
     return;
   }
@@ -66,11 +67,15 @@ async function loop() {
   const firstPostId = $posts[0].id;
   const lastPostId = $posts[$posts.length - 1].id;
 
-  // If the location path changed and the first or last post id is the same,
-  // we need to loop again because the new location path posts aren't loaded yet:
+  // ------------------------------------
+  // Location Path Change Detection
+
+  // If the location path has changed:
   if (previousLocationPath !== window.location.pathname) {
+    // And the first or last post id is the same,
+    // we need to loop again because the new location path posts aren't loaded yet:
     if (firstPostId === previousFirstPostId || lastPostId === previousLastPostId) {
-      loopId = setTimeout(loop, FAST_LOOP_DELAY);
+      loopId = window.setTimeout(loop, FAST_LOOP_DELAY);
 
       return;
     }
@@ -120,7 +125,7 @@ async function loop() {
   // If the posts list hasn't changed:
   if (firstPostId === previousFirstPostId && lastPostId === previousLastPostId) {
     // We tick:
-    loopId = setTimeout(loop, LOOP_DELAY);
+    loopId = window.setTimeout(loop, LOOP_DELAY);
 
     return;
   }
@@ -138,37 +143,21 @@ async function loop() {
       if (findPostIndexWithId($post.id) !== -1) return;
 
       const $postUserPicture = $post.querySelector("img.more-modal__image");
-      if ($postUserPicture === null) {
-        e("Posts Parsing", "I can't find the other root post reply user picture node.");
-
-        return;
-      }
+      if ($postUserPicture === null) return;
 
       const $postTime = $post.querySelector("time.post__time");
-      if ($postTime === null) {
-        e("Posts Parsing", "I can't find the other root post reply time node.");
-
-        return;
-      }
+      if ($postTime === null) return;
 
       let rootPostIndex;
       if ($post.classList.contains("other--root")) {
         // If this post is a reply to a non-related previous root post:
 
         const $postMessage = $post.querySelector(".post__link > span > .theme");
-        if ($postMessage === null) {
-          e("Posts Parsing", "I can't find the other root post reply message node.");
-
-          return;
-        }
+        if ($postMessage === null) return;
 
         const theme = themize($postMessage.innerText);
         rootPostIndex = findPostIndexWithTheme(theme);
-        if (rootPostIndex === -1) {
-          e("Posts Parsing", "I can't find the other root post index for this reply.");
-
-          return;
-        }
+        if (rootPostIndex === -1) return;
       } else {
         // If this post is a reply to a related previous root post:
 
@@ -197,9 +186,14 @@ async function loop() {
     }
 
     const $rootPostCounter = $post.querySelector(".comment-count");
+
+    // Id the counter node doesn't exist, it means that this root post doesn't have any reply.
+    // We can ignore it:
     if ($rootPostCounter === null) return;
 
     const rootPostIndex = findPostIndexWithId($post.id);
+
+    // If this root post is already in the list, we just need to update its counter:
     if (rootPostIndex !== -1) {
       rootPostsWithReplies[rootPostIndex].count = Number($rootPostCounter.innerText);
 
@@ -207,18 +201,10 @@ async function loop() {
     }
 
     const $rootPostButtons = $post.querySelectorAll(".post__header--info button");
-    if ($rootPostButtons.length === 0) {
-      e("Posts Parsing", "I can't find the root post button node.");
-
-      return;
-    }
+    if ($rootPostButtons.length === 0) return;
 
     const $rootPostMessage = $post.querySelector(".post-message__text");
-    if ($rootPostMessage === null) {
-      e("Posts Parsing", "I can't find the root post message node.");
-
-      return;
-    }
+    if ($rootPostMessage === null) return;
 
     const postTheme = themize(stripHtmlTags($rootPostMessage.innerHTML));
 
@@ -233,21 +219,16 @@ async function loop() {
     });
   });
 
-  updateCounters(rootPostsWithReplies);
-
-  loopId = setTimeout(loop, LOOP_DELAY);
-}
-
-chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  switch (message) {
-    case "areYouThere":
-      sendResponse(true);
-      break;
-
-    default:
-      e("Message Listening", `I received an unknown message from the extension: ${message}`);
+  // We updated the counter blocks nodes:
+  try {
+    updateCounters(rootPostsWithReplies);
+  } catch (err) {
+    e("Counter Updating", `Something went wrong.`);
+    console.error(err);
   }
-});
+
+  loopId = window.setTimeout(loop, LOOP_DELAY);
+}
 
 const $mattermostMeta = document.querySelector(`meta[name="apple-mobile-web-app-title"]`);
 if ($mattermostMeta !== null && $mattermostMeta.content === "Mattermost") {
