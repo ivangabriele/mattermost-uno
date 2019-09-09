@@ -40,7 +40,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   const { url } = tab;
   if (
     url === undefined ||
-    !/^https:\/\/([^/]+\.mattermost|mattermost.[^/]+|[^/]+.mattermost.[^/]+)/.test(url)
+    !/^https:\/\/([^/]+\.mattermost|mattermost\.[^/]+|[^/]+\.mattermost\.[^/]+)/.test(url)
   )
     return;
 
