@@ -29,7 +29,11 @@ writeFileSync("./manifest.json", `${JSON.stringify(manifestSource, null, 2)}\n`)
 execSync(`git add ./manifest.json && git commit -m "manifest: bump version to ${newVersion}"`);
 execSync(`npm version ${newVersionLevel}`);
 
-const archiveOutput = createWriteStream(`./mattermost-uno-chrome-extension-${newVersion}.zip`);
+/* -------------------------------------------------------------------------------------------------
+  Unsigned Archive
+*/
+
+const archiveOutput = createWriteStream(`./mattermost-uno-unsigned.zip`);
 const archive = archiver("zip", { zlib: { level: 9 } });
 
 // Listen for all archive data to be written:
