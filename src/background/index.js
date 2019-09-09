@@ -1,42 +1,46 @@
-let isEnabled = false;
+import { CHANNEL_MESSAGE } from "../constants";
 
-let tabs = [];
+const ports = [];
 
-function enable(tabId) {
-  if (!tabs.includes(tabId)) tabs.push(tabId);
+chrome.runtime.onConnect.addListener(port => {
+  if (port.name !== "mattermost-uno") return;
 
-  chrome.tabs.insertCSS(tabId, { file: "content.css" });
-  chrome.tabs.executeScript(tabId, { file: "content.js" });
+  ports[port.sender.tab.id] = port;
 
-  chrome.browserAction.setTitle({ tabId, title: "Disable Mattermost Uno" });
-  chrome.browserAction.setIcon({ tabId, path: "icons/icon-32x32.png" });
+  // eslint-disable-next-line no-shadow
+  port.onDisconnect.addListener(port => {
+    const tabId = port.sender.tab.id;
 
-  isEnabled = true;
-}
+    delete ports[tabId];
 
-function disable(tabId) {
-  if (!tabs.includes(tabId)) tabs = tabs.filter(id => id !== tabId);
+    chrome.browserAction.setTitle({ tabId, title: "Enable Mattermost Uno" });
+    chrome.browserAction.setIcon({ tabId, path: "icons/icon-32x32-bw.png" });
+  });
 
-  chrome.tabs.executeScript(tabId, { code: `location.reload();` });
+  port.onMessage.addListener((message, port) => {
+    const tabId = port.sender.tab.id;
 
-  chrome.browserAction.setTitle({ tabId, title: "Enable Mattermost Uno" });
-  chrome.browserAction.setIcon({ tabId, path: "icons/icon-32x32-bw.png" });
+    switch (message.value) {
+      case CHANNEL_MESSAGE.CONTENT_IS_MATTERMOST:
+        chrome.browserAction.setTitle({ tabId, title: "Disable Mattermost Uno" });
+        chrome.browserAction.setIcon({ tabId, path: "icons/icon-32x32.png" });
+        break;
 
-  isEnabled = false;
-}
-
-chrome.browserAction.onClicked.addListener(tab => {
-  chrome.tabs.sendMessage(tab.id, "areYouThere", async res => {
-    if (res === undefined) enable(tab.id);
-    else disable(tab.id);
+      default:
+        console.error("Something went wrong.");
+    }
   });
 });
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   const { status } = changeInfo;
   if (status !== "complete") return;
 
-  chrome.tabs.sendMessage(tabId, "areYouThere", async res => {
-    if (isEnabled && res === undefined) enable(tabId);
-  });
+  const { url } = tab;
+  if (url === undefined || !url.includes("mattermost")) return;
+
+  if (ports[tabId] === undefined) {
+    chrome.tabs.insertCSS(tabId, { file: "content.css" });
+    chrome.tabs.executeScript(tabId, { file: "content.js" });
+  }
 });
