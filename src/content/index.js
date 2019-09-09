@@ -7,6 +7,8 @@ import themize from "./helpers/themize";
 import waitFor from "./helpers/waitFor";
 import updateCounters from "./libs/updateCounters";
 
+import { CHANNEL_MESSAGE } from "../constants";
+
 function safelyHidePostNode($post) {
   try {
     $post.classList.add("MattermostUno--hide");
@@ -25,6 +27,7 @@ const LOOP_DELAY = 1000;
 
 const rootPostsWithReplies = [];
 let $postList = null;
+let connection;
 let previousFirstPostId = "";
 let previousLastPostId = "";
 let themeHref = "";
@@ -37,7 +40,7 @@ const findPostIndexWithTheme = theme => findIndex(propEq("theme", theme))(rootPo
  * TODO Try to discover a way to handle non-related replies declared as related ones.
  * TODO Handle posts cache deletion case.
  */
-async function run() {
+async function loop() {
   let $posts = [];
   let retries = 10;
 
@@ -49,7 +52,7 @@ async function run() {
   }
 
   if ($posts.length === 0 && retries === -1) {
-    setTimeout(run, LOOP_DELAY);
+    setTimeout(loop, LOOP_DELAY);
 
     return;
   }
@@ -94,7 +97,7 @@ async function run() {
   const lastPostId = $posts[$posts.length - 1].id;
   // If the posts list hasn't changed:
   if (firstPostId === previousFirstPostId && lastPostId === previousLastPostId) {
-    setTimeout(run, LOOP_DELAY);
+    setTimeout(loop, LOOP_DELAY);
 
     return;
   }
@@ -214,7 +217,7 @@ async function run() {
 
   updateCounters(rootPostsWithReplies);
 
-  setTimeout(run, LOOP_DELAY);
+  setTimeout(loop, LOOP_DELAY);
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
@@ -229,4 +232,9 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 });
 
 const $mattermostMeta = document.querySelector(`meta[name="apple-mobile-web-app-title"]`);
-if ($mattermostMeta !== null && $mattermostMeta.content === "Mattermost") run();
+if ($mattermostMeta !== null && $mattermostMeta.content === "Mattermost") {
+  connection = chrome.runtime.connect({ name: "mattermost-uno" });
+  connection.postMessage({ value: CHANNEL_MESSAGE.CONTENT_IS_MATTERMOST });
+
+  loop();
+}
