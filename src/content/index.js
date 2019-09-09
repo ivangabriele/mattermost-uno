@@ -9,13 +9,6 @@ import updateCounters from "./libs/updateCounters";
 
 import { CHANNEL_MESSAGE } from "../constants";
 
-function safelyHidePostNode($post) {
-  try {
-    $post.classList.add("MattermostUno--hide");
-    // eslint-disable-next-line no-empty
-  } catch (err) {}
-}
-
 function watchPostListScroll() {
   if (this.scrollTop > 100) return;
 
@@ -123,7 +116,6 @@ async function loop() {
       const $postTime = $post.querySelector("time.post__time");
       if ($postTime === null) {
         e("Posts Parsing", "I can't find the other root post reply time node.");
-        safelyHidePostNode($post);
 
         return;
       }
@@ -135,7 +127,6 @@ async function loop() {
         const $postMessage = $post.querySelector(".post__link > span > .theme");
         if ($postMessage === null) {
           e("Posts Parsing", "I can't find the other root post reply message node.");
-          safelyHidePostNode($post);
 
           return;
         }
@@ -144,7 +135,6 @@ async function loop() {
         rootPostIndex = findPostIndexWithTheme(theme);
         if (rootPostIndex === -1) {
           e("Posts Parsing", "I can't find the other root post index for this reply.");
-          safelyHidePostNode($post);
 
           return;
         }
@@ -154,7 +144,6 @@ async function loop() {
         rootPostIndex = rootPostsWithReplies.length - 1;
         if (rootPostIndex === -1) {
           e("Posts Parsing", "I can't find the same root post index for this reply.");
-          safelyHidePostNode($post);
 
           return;
         }
@@ -172,8 +161,6 @@ async function loop() {
       //   }
       // }
       parentRootPost.updatedAt = $postTime.dateTime;
-
-      safelyHidePostNode($post);
 
       return;
     }
