@@ -100,8 +100,10 @@ function buildSourceCodeArchive() {
 
   archive.pipe(archiveOutput);
 
+  archive.glob("_locales/**");
   archive.glob("icons/**");
   archive.glob("src/**");
+  archive.glob("scripts/**");
   archive.glob("*.js");
   archive.glob("*.json");
   archive.glob("*.md");
@@ -109,7 +111,10 @@ function buildSourceCodeArchive() {
   archive.file(".babelrc");
   archive.file(".editorconfig");
   archive.file(".eslintrc.yml");
+  archive.file(".gitignore");
+  archive.file(".prettierignore");
   archive.file(".prettierrc");
+  archive.file(".travis.yml");
   archive.file("LICENSE");
   archive.file("yarn.lock");
 
