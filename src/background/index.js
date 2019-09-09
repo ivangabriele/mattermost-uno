@@ -38,7 +38,11 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (status !== "complete") return;
 
   const { url } = tab;
-  if (url === undefined || !url.includes("mattermost")) return;
+  if (
+    url === undefined ||
+    !/^https:\/\/([^/]+\.mattermost|mattermost.[^/]+|[^/]+.mattermost.[^/]+)/.test(url)
+  )
+    return;
 
   if (ports[tabId] === undefined) {
     chrome.tabs.insertCSS(tabId, { file: "content.css" });
