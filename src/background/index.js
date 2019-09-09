@@ -17,6 +17,7 @@ chrome.runtime.onConnect.addListener(port => {
     chrome.browserAction.setIcon({ tabId, path: "icons/icon-32x32-bw.png" });
   });
 
+  // eslint-disable-next-line no-shadow
   port.onMessage.addListener((message, port) => {
     const tabId = port.sender.tab.id;
 
