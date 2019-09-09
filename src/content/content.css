@@ -1,3 +1,6 @@
+.post-list-holder-by-time .post.post--root .post__body {
+  padding-bottom: 3.5rem;
+}
 .post-list-holder-by-time .post.post--comment {
   display: none;
 }
@@ -10,9 +13,10 @@
   cursor: pointer;
   display: flex;
   font-size: 1.2rem;
-  margin: 0.5rem 0 0.6rem;
-  max-width: 600px;
+  margin: -3rem 0 0 0.5rem;
+  width: 600px;
   padding: 0.4rem 0.75rem 0.35rem;
+  position: absolute;
 }
 body.MattermostUno--dark .MattermostUno-counter {
   background-color: rgba(0, 0, 0, 0.1);
