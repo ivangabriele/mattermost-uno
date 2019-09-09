@@ -44,7 +44,7 @@ yarn release [major|minor|patch|premajor|preminor|prepatch|prerelease]
 ---
 
 [img-chrome]: https://img.shields.io/chrome-web-store/users/fmlacedjkenmgemhjlljfkeckhbjjilc?label=Chrome%20users&style=flat-square
-[img-firefox]: https://img.shields.io/amo/users/mattermost-uno?style=flat-square
+[img-firefox]: https://img.shields.io/amo/users/mattermost-uno?label=Firefox%20users&style=flat-square
 [img-travis]: https://img.shields.io/travis/com/ivangabriele/mattermost-browser-extension?style=flat-square
 [img-version]: https://img.shields.io/github/package-json/v/ivangabriele/mattermost-browser-extension?style=flat-square
 
