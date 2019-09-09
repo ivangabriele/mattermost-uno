@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2019-09-09
+
+### Added
+
+- Release Firefox extension.
+
+### Changed
+
+- Switch back to extension auto-enabling.
+- Improve Mattermost detection.
+
+### Fixed
+
+- Fix replies flickering.
+- Fix background runtime error.
+
 ## [1.5.0] - 2019-09-08
 
 ### Added
@@ -19,7 +35,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
-- Fix infinite scroll Mattermost behavior incompatibility.
+- Fix infinite scroll Mattermost behavior incompatibility (DOM exception).
 
 ## [1.4.3] - 2019-09-08
 
