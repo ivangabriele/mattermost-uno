@@ -162,11 +162,7 @@ async function loop() {
         // If this post is a reply to a related previous root post:
 
         rootPostIndex = rootPostsWithReplies.length - 1;
-        if (rootPostIndex === -1) {
-          e("Posts Parsing", "I can't find the same root post index for this reply.");
-
-          return;
-        }
+        if (rootPostIndex === -1) return;
       }
 
       const parentRootPost = rootPostsWithReplies[rootPostIndex];
