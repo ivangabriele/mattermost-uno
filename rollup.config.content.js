@@ -1,6 +1,5 @@
 import copy from "rollup-plugin-copy";
 import filesize from "rollup-plugin-filesize";
-import { terser } from "rollup-plugin-terser";
 
 import commonConfig from "./rollup.config";
 
@@ -26,8 +25,6 @@ export default {
 
     ...(NODE_ENV !== "development"
       ? [
-          // Minify source:
-          terser(),
           // Calculate output bundle size:
           filesize()
         ]
