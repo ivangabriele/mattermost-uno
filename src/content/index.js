@@ -16,17 +16,30 @@ function watchPostListScroll() {
   if ($loadMoreMessagesButton !== null) $loadMoreMessagesButton.click();
 }
 
+const FAST_LOOP_DELAY = 400;
 const LOOP_DELAY = 1000;
 
-const rootPostsWithReplies = [];
 let $postList = null;
 let connection;
+let loopId = -1;
 let previousFirstPostId = "";
 let previousLastPostId = "";
+let previousLocationPath = "";
+let rootPostsWithReplies = [];
 let themeHref = "";
 
 const findPostIndexWithId = id => findIndex(propEq("id", id))(rootPostsWithReplies);
 const findPostIndexWithTheme = theme => findIndex(propEq("theme", theme))(rootPostsWithReplies);
+
+// If the location path has changed:
+window.addEventListener(
+  "hashchange",
+  () => {
+    // And the a loop is in progress, we clear it:
+    if (loopId !== -1) clearTimeout(loopId);
+  },
+  false
+);
 
 /**
  * TODO Get rid of the dirty retry hack.
@@ -41,19 +54,36 @@ async function loop() {
     $posts = document.querySelectorAll(".post-list-holder-by-time .post");
 
     // eslint-disable-next-line no-await-in-loop
-    await waitFor(400);
+    await waitFor(FAST_LOOP_DELAY);
   }
 
   if ($posts.length === 0 && retries === -1) {
-    setTimeout(loop, LOOP_DELAY);
+    loopId = setTimeout(loop, LOOP_DELAY);
 
     return;
+  }
+
+  const firstPostId = $posts[0].id;
+  const lastPostId = $posts[$posts.length - 1].id;
+
+  // If the location path changed and the first or last post id is the same,
+  // we need to loop again because the new location path posts aren't loaded yet:
+  if (previousLocationPath !== window.location.pathname) {
+    if (firstPostId === previousFirstPostId || lastPostId === previousLastPostId) {
+      loopId = setTimeout(loop, FAST_LOOP_DELAY);
+
+      return;
+    }
+
+    rootPostsWithReplies = [];
+    previousLocationPath = window.location.pathname;
   }
 
   // ------------------------------------
   // Theme
 
   const $theme = document.querySelector("link.code_theme");
+
   // If the theme has changed:
   if ($theme !== null && $theme.href !== themeHref) {
     themeHref = $theme.href;
@@ -77,6 +107,7 @@ async function loop() {
   // Infinite Scroll
 
   const $newPostList = document.querySelector(".post-list-holder-by-time");
+
   // If the post list node has changed:
   if ($newPostList !== null && $newPostList !== $postList) {
     $postList = document.querySelector(".post-list-holder-by-time");
@@ -86,14 +117,15 @@ async function loop() {
   // ------------------------------------
   // Posts Cache
 
-  const firstPostId = $posts[0].id;
-  const lastPostId = $posts[$posts.length - 1].id;
   // If the posts list hasn't changed:
   if (firstPostId === previousFirstPostId && lastPostId === previousLastPostId) {
-    setTimeout(loop, LOOP_DELAY);
+    // We tick:
+    loopId = setTimeout(loop, LOOP_DELAY);
 
     return;
   }
+
+  // If the posts list has changed, we cache the first and last one's id:
   previousFirstPostId = firstPostId;
   previousLastPostId = lastPostId;
 
@@ -105,13 +137,12 @@ async function loop() {
     if ($post.classList.contains("post--comment")) {
       if (findPostIndexWithId($post.id) !== -1) return;
 
-      // const $postUserPicture = $post.querySelector("img.more-modal__image");
-      // if ($postUserPicture === null) {
-      //   e("Posts Parsing", "I can't find the other root post reply user picture node.");
-      //   safelyHidePostNode($post);
+      const $postUserPicture = $post.querySelector("img.more-modal__image");
+      if ($postUserPicture === null) {
+        e("Posts Parsing", "I can't find the other root post reply user picture node.");
 
-      //   return;
-      // }
+        return;
+      }
 
       const $postTime = $post.querySelector("time.post__time");
       if ($postTime === null) {
@@ -150,16 +181,16 @@ async function loop() {
       }
 
       const parentRootPost = rootPostsWithReplies[rootPostIndex];
-      // if (!parentRootPost.authors.includes($postUserPicture.src)) {
-      //   parentRootPost.authors.push($postUserPicture.src);
+      if (!parentRootPost.authors.includes($postUserPicture.src)) {
+        parentRootPost.authors.push($postUserPicture.src);
 
-      //   if (
-      //     parentRootPost.authors.length > parentRootPost.count ||
-      //     parentRootPost.authors.length > 5
-      //   ) {
-      //     parentRootPost.authors.shift();
-      //   }
-      // }
+        if (
+          parentRootPost.authors.length > parentRootPost.count ||
+          parentRootPost.authors.length > 5
+        ) {
+          parentRootPost.authors.shift();
+        }
+      }
       parentRootPost.updatedAt = $postTime.dateTime;
 
       return;
@@ -204,7 +235,7 @@ async function loop() {
 
   updateCounters(rootPostsWithReplies);
 
-  setTimeout(loop, LOOP_DELAY);
+  loopId = setTimeout(loop, LOOP_DELAY);
 }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
