@@ -21,7 +21,6 @@ Unofficial browser extension bringing some Slack-like features into [Mattermost]
 ## Roadmap
 
 - Live extension counter.
-- Experimental authors pictures in replies counter block.
 - Customizable options.
 
 ## Contribute
