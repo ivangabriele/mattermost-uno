@@ -13,14 +13,23 @@ const FAST_LOOP_DELAY = 400;
 const INFINITE_SCROLL_HEIGHT = 360;
 const LOOP_DELAY = 1000;
 
+/** Post list container node. */
 let $postList = null;
+/** Live port connection with the background script. */
 let connection;
+/** Last first post ID in the post list. */
+let lastFirstPostId = "";
+/** Last last post ID in the post list. */
+let lastLastPostId = "";
+/** Last location path. */
+let lastLocationPath = "";
+/** Mattermost last theme stylesheet URL. */
+let lastThemeHref = "";
 let loopId = -1;
-let previousFirstPostId = "";
-let previousLastPostId = "";
-let previousLocationPath = "";
+/** List of cached posts replies IDs for the current location path. */
+let postsReplies = [];
+/** List of cached root post containing replies for the current location path. */
 let rootPostsWithReplies = [];
-let themeHref = "";
 
 const findPostIndexWithId = id => findIndex(propEq("id", id))(rootPostsWithReplies);
 const findPostIndexWithTheme = theme => findIndex(propEq("theme", theme))(rootPostsWithReplies);
@@ -71,27 +80,28 @@ async function loop() {
   // Location Path Change Detection
 
   // If the location path has changed:
-  if (previousLocationPath !== window.location.pathname) {
+  if (lastLocationPath !== window.location.pathname) {
     // And the first or last post id is the same,
     // we need to loop again because the new location path posts aren't loaded yet:
-    if (firstPostId === previousFirstPostId || lastPostId === previousLastPostId) {
+    if (firstPostId === lastFirstPostId || lastPostId === lastLastPostId) {
       loopId = window.setTimeout(loop, FAST_LOOP_DELAY);
 
       return;
     }
 
+    postsReplies = [];
     rootPostsWithReplies = [];
-    previousLocationPath = window.location.pathname;
+    lastLocationPath = window.location.pathname;
   }
 
   // ------------------------------------
   // Theme
 
-  const $theme = document.querySelector("link.code_theme");
+  const $newTheme = document.querySelector("link.code_theme");
 
   // If the theme has changed:
-  if ($theme !== null && $theme.href !== themeHref) {
-    themeHref = $theme.href;
+  if ($newTheme !== null && $newTheme.href !== lastThemeHref) {
+    lastThemeHref = $newTheme.href;
     const $appContent = document.querySelector(".app__content");
 
     if ($appContent !== null) {
@@ -123,7 +133,7 @@ async function loop() {
   // Posts Cache
 
   // If the posts list hasn't changed:
-  if (firstPostId === previousFirstPostId && lastPostId === previousLastPostId) {
+  if (firstPostId === lastFirstPostId && lastPostId === lastLastPostId) {
     // We tick:
     loopId = window.setTimeout(loop, LOOP_DELAY);
 
@@ -131,8 +141,8 @@ async function loop() {
   }
 
   // If the posts list has changed, we cache the first and last one's id:
-  previousFirstPostId = firstPostId;
-  previousLastPostId = lastPostId;
+  lastFirstPostId = firstPostId;
+  lastLastPostId = lastPostId;
 
   // ------------------------------------
   // Posts Parsing
@@ -140,6 +150,9 @@ async function loop() {
   $posts.forEach($post => {
     // If this post is a reply to a root post:
     if ($post.classList.contains("post--comment")) {
+      // We don't need to parse again a cached post reply:
+      if (postsReplies.includes($post.id)) return;
+      // We can't link a post reply whose root post is not visible:
       if (findPostIndexWithId($post.id) !== -1) return;
 
       const $postUserPicture = $post.querySelector("img.more-modal__image");
@@ -171,6 +184,8 @@ async function loop() {
         if (parentRootPost.authors.length > 5) parentRootPost.authors.shift();
       }
       parentRootPost.updatedAt = $postTime.dateTime;
+
+      postsReplies.push($post.id);
 
       return;
     }
