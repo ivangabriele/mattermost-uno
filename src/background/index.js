@@ -13,7 +13,7 @@ chrome.runtime.onConnect.addListener(port => {
 
     delete ports[tabId];
 
-    chrome.browserAction.setTitle({ tabId, title: "Enable Mattermost Uno" });
+    chrome.browserAction.setTitle({ tabId, title: "Mattermost Uno is disabled on this site." });
     chrome.browserAction.setIcon({ tabId, path: "icons/icon-32x32-bw.png" });
   });
 
@@ -23,7 +23,7 @@ chrome.runtime.onConnect.addListener(port => {
 
     switch (message.value) {
       case CHANNEL_MESSAGE.CONTENT_IS_MATTERMOST:
-        chrome.browserAction.setTitle({ tabId, title: "Disable Mattermost Uno" });
+        chrome.browserAction.setTitle({ tabId, title: "Mattermost Uno is running on this site." });
         chrome.browserAction.setIcon({ tabId, path: "icons/icon-32x32.png" });
         break;
 
