@@ -1,6 +1,7 @@
 .post-list-holder-by-time .post.post--root .post__body {
   padding-bottom: 3.75rem;
 }
+.post-list-holder-by-time .new-separator,
 .post-list-holder-by-time .post.post--comment {
   display: none;
 }
