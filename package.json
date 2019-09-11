@@ -9,12 +9,13 @@
     "build": "yarn build:background && yarn build:content",
     "build:background": "rollup -c ./rollup.config.background.js",
     "build:content": "rollup -c ./rollup.config.content.js",
-    "build:release": "node ./scripts/build/release",
+    "build:release": "node ./scripts/ci/build_release.js",
     "build:watch": "concurrently \"yarn build:background --watch\" \"yarn build:content --watch\"",
     "dev": "cross-env NODE_ENV=development yarn build:watch",
     "test": "yarn test:lint && yarn test:unit",
     "test:lint": "eslint ./src/**/*.js",
     "test:unit": "jest",
+    "preversion": "node ./scripts/build/version.js",
     "postversion": "git push origin HEAD && git push --tags"
   },
   "devDependencies": {
