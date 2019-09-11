@@ -27,7 +27,7 @@ manifestSource.version = newVersion;
 writeFileSync("./manifest.json", `${JSON.stringify(manifestSource, null, 2)}\n`);
 
 execSync(`git add ./manifest.json && git commit -m "manifest: bump version to ${newVersion}"`);
-execSync(`npm version ${newVersionLevel}`);
+execSync(`npm version ${newVersionLevel} -f`);
 
 /* -------------------------------------------------------------------------------------------------
   Unsigned Archive
