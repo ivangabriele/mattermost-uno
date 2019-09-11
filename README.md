@@ -1,4 +1,4 @@
-# Mattermost Uno Browser Extension
+# Mattermost Uno
 
 [![Latest Version][img-version]][link-version]
 [![Travis CI Status][img-travis]][link-travis]
@@ -44,12 +44,12 @@ yarn release [major|minor|patch|premajor|preminor|prepatch|prerelease]
 
 [img-chrome]: https://img.shields.io/chrome-web-store/users/fmlacedjkenmgemhjlljfkeckhbjjilc?label=Chrome%20users&style=flat-square
 [img-firefox]: https://img.shields.io/amo/users/mattermost-uno?label=Firefox%20users&style=flat-square
-[img-travis]: https://img.shields.io/travis/com/ivangabriele/mattermost-browser-extension?style=flat-square
-[img-version]: https://img.shields.io/github/package-json/v/ivangabriele/mattermost-browser-extension?style=flat-square
+[img-travis]: https://img.shields.io/travis/com/ivangabriele/mattermost-uno?style=flat-square
+[img-version]: https://img.shields.io/github/package-json/v/ivangabriele/mattermost-uno?style=flat-square
 
 [link-chrome]: https://chrome.google.com/webstore/detail/mattermost-uno/fmlacedjkenmgemhjlljfkeckhbjjilc
 [link-firefox]: https://addons.mozilla.org/en-US/firefox/addon/mattermost-uno/
-[link-license]: https://github.com/ivangabriele/mattermost-browser-extension/blob/master/LICENSE
+[link-license]: https://github.com/ivangabriele/mattermost-uno/blob/master/LICENSE
 [link-mattermost]: https://mattermost.com
-[link-travis]: https://travis-ci.com/ivangabriele/mattermost-browser-extension
-[link-version]: https://github.com/ivangabriele/mattermost-browser-extension/releases
+[link-travis]: https://travis-ci.com/ivangabriele/mattermost-uno
+[link-version]: https://github.com/ivangabriele/mattermost-uno/releases
