@@ -37,8 +37,11 @@ Then load the `/dist` directory in your browser as an unpacked extension.
 ### Release
 
 ```bash
-yarn release [major|minor|patch|premajor|preminor|prepatch|prerelease]
+npm version [MINOR|PATCH]
 ```
+
+1. The new Git tag will be pushed to Github.
+2. Travis CI will test, build and publish the new release.
 
 ---
 
