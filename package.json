@@ -1,7 +1,7 @@
 {
   "name": "mattermost-uno",
   "version": "1.9.1",
-  "description": "Mattermost Uno browsers extension.",
+  "description": "Unofficial Chrome & Firefox extension bringing some Slack-like features into Mattermost.",
   "license": "MIT",
   "private": true,
   "main": "index.js",
