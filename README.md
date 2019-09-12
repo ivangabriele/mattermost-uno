@@ -5,7 +5,8 @@
 [![Chrome Users][img-chrome]][link-chrome]
 [![Firefox Users][img-firefox]][link-firefox]
 
-Unofficial browser extension bringing some Slack-like features into [Mattermost][link-mattermost].
+Unofficial Chrome & Firefox extension bringing some Slack-like features into
+[Mattermost][link-mattermost].
 
 ## Links
 
@@ -17,6 +18,16 @@ Unofficial browser extension bringing some Slack-like features into [Mattermost]
 - Hide posts replies.
 - Inject a Slack-like block under the posts containing replies.
 - Infinite scroll.
+
+## Screenshots
+
+### Replies Block _(Default Theme)_
+
+![Mattermost Default Theme Users][img-screenshot-1]
+
+### Replies Block _(Dark Theme)_
+
+![Mattermost Dark Theme][img-screenshot-2]
 
 ## Roadmap
 
@@ -47,6 +58,8 @@ npm version [MINOR|PATCH]
 
 [img-chrome]: https://img.shields.io/chrome-web-store/users/fmlacedjkenmgemhjlljfkeckhbjjilc?label=Chrome%20users&style=flat-square
 [img-firefox]: https://img.shields.io/amo/users/mattermost-uno?label=Firefox%20users&style=flat-square
+[img-screenshot-1]: https://github.com/ivangabriele/mattermost-uno/raw/master/docs/screenshots/browser-1.png
+[img-screenshot-2]: https://github.com/ivangabriele/mattermost-uno/raw/master/docs/screenshots/browser-2.png
 [img-travis]: https://img.shields.io/travis/com/ivangabriele/mattermost-uno?style=flat-square
 [img-version]: https://img.shields.io/github/package-json/v/ivangabriele/mattermost-uno?style=flat-square
 
