@@ -10,6 +10,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fix Firefox extension bootstrap (missing permission).
+- Hide new messages separator.
 
 ## [1.9.0] - 2019-09-10
 
