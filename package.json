@@ -11,6 +11,7 @@
     "build:content": "rollup -c ./rollup.config.content.js",
     "build:release": "node ./scripts/ci/build_release.js",
     "build:watch": "concurrently \"yarn build:background --watch\" \"yarn build:content --watch\"",
+    "ci:generate:release_notes": "node ./scripts/ci/generate_release_notes.js",
     "dev": "cross-env NODE_ENV=development yarn build:watch",
     "test": "yarn test:lint && yarn test:unit",
     "test:lint": "eslint ./src/**/*.js",
