@@ -6,7 +6,7 @@ cache:
 
 stages:
   - Test
-  - name: Deploy
+  - name: Release
     if: repo = "ivangabriele/mattermost-uno" AND tag IS present
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
       name: Unit Tests
       script: ./scripts/ci/run_unit_tests.sh
 
-    - stage: Deploy
+    - stage: Release
       name: Unsigned Extension
       script: skip
       before_deploy:
