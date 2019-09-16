@@ -6,7 +6,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "build": "yarn build:background && yarn build:content",
+    "build": "rimraf ./dist && yarn build:background && yarn build:content",
     "build:background": "rollup -c ./rollup.config.background.js",
     "build:content": "rollup -c ./rollup.config.content.js",
     "build:release": "yarn build && node ./scripts/ci/build_release.js",
