@@ -1,6 +1,6 @@
 {
   "name": "mattermost-uno",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "Unofficial Chrome & Firefox extension bringing some Slack-like features into Mattermost.",
   "license": "MIT",
   "private": true,
