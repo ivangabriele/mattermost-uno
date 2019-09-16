@@ -21,8 +21,6 @@ let connection;
 let lastFirstPostId = "";
 /** Last last post ID in the post list. */
 let lastLastPostId = "";
-/** Last location path. */
-let lastLocationPath = "";
 /** Mattermost last theme stylesheet URL. */
 let lastThemeHref = "";
 let loopId = -1;
@@ -57,6 +55,8 @@ window.addEventListener(
  * TODO Handle posts cache deletion case.
  */
 async function loop() {
+  console.info(window.location.pathname, "Loop");
+
   let $posts = [];
   let retries = 10;
 
@@ -73,25 +73,26 @@ async function loop() {
     return;
   }
 
+  /** Do we need to force the rendering because of a fast forth and back location path switch ? */
+  let hasToRender = false;
   const firstPostId = $posts[0].id;
   const lastPostId = $posts[$posts.length - 1].id;
 
   // ------------------------------------
   // Location Path Change Detection
+  //
+  // If we quickly switch to another path and go back to the previous one, the loop is not fast
+  // enough to detect it. It's a safer strategy to compare the number of existing injected counters
+  // with the number of native ones.
 
-  // If the location path has changed:
-  if (lastLocationPath !== window.location.pathname) {
-    // And the first or last post id is the same,
-    // we need to loop again because the new location path posts aren't loaded yet:
-    if (firstPostId === lastFirstPostId || lastPostId === lastLastPostId) {
-      loopId = window.setTimeout(loop, FAST_LOOP_DELAY);
-
-      return;
-    }
-
+  // If the number of counters doesn't match:
+  if (
+    document.querySelectorAll(".post--root .comment-count").length !==
+    document.querySelectorAll(".MattermostUno-counter").length
+  ) {
+    hasToRender = true;
     postsReplies = [];
     rootPostsWithReplies = [];
-    lastLocationPath = window.location.pathname;
   }
 
   // ------------------------------------
@@ -133,7 +134,7 @@ async function loop() {
   // Posts Cache
 
   // If the posts list hasn't changed:
-  if (firstPostId === lastFirstPostId && lastPostId === lastLastPostId) {
+  if (!hasToRender && firstPostId === lastFirstPostId && lastPostId === lastLastPostId) {
     // We tick:
     loopId = window.setTimeout(loop, LOOP_DELAY);
 
@@ -146,6 +147,8 @@ async function loop() {
 
   // ------------------------------------
   // Posts Parsing
+
+  console.info(window.location.pathname, "Posts Parsing");
 
   $posts.forEach($post => {
     // If this post is a reply to a root post:
