@@ -9,7 +9,7 @@
     "build": "yarn build:background && yarn build:content",
     "build:background": "rollup -c ./rollup.config.background.js",
     "build:content": "rollup -c ./rollup.config.content.js",
-    "build:release": "node ./scripts/ci/build_release.js",
+    "build:release": "yarn build && node ./scripts/ci/build_release.js",
     "build:watch": "concurrently \"yarn build:background --watch\" \"yarn build:content --watch\"",
     "ci:generate:release_notes": "node ./scripts/ci/generate_release_notes.js",
     "dev": "cross-env NODE_ENV=development yarn build:watch",
