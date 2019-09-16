@@ -41,6 +41,7 @@
     "numeral": "2.0.6",
     "prettier": "1.18.2",
     "ramda": "0.26.1",
+    "rimraf": "3.0.0",
     "rollup": "1.21.3",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.1.0",
