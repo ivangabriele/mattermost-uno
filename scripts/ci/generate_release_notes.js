@@ -16,12 +16,17 @@ changelog.releases[0].changes.forEach((changes, key) => {
   source += changes.reduce((prev, change) => `${prev}${change}\n`, "");
 });
 
+const chromeUri =
+  "https://chrome.google.com/webstore/detail/mattermost-uno/fmlacedjkenmgemhjlljfkeckhbjjilc";
+const firefoxUri = "https://addons.mozilla.org/en-US/firefox/addon/mattermost-uno/";
 const uriStart = "https://github.com/ivangabriele/mattermost-browser-extension/releases/download";
 const uriEnd = "/mattermost-uno-unsigned.zip";
 const sourceWithLink = `${source.trim()}
 
 ---
 
+- [Install Chrome Extension](${chromeUri})
+- [Install Firefox Extension](${firefoxUri})
 - [Download Unsigned Browser Extension](${uriStart}/v${process.env.npm_package_version}${uriEnd})`;
 
 writeFileSync("./RELEASE_NOTES.md", sourceWithLink, "utf8");
