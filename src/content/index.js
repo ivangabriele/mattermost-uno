@@ -55,8 +55,6 @@ window.addEventListener(
  * TODO Handle posts cache deletion case.
  */
 async function loop() {
-  console.info(window.location.pathname, "Loop");
-
   let $posts = [];
   let retries = 10;
 
@@ -147,8 +145,6 @@ async function loop() {
 
   // ------------------------------------
   // Posts Parsing
-
-  console.info(window.location.pathname, "Posts Parsing");
 
   $posts.forEach($post => {
     // If this post is a reply to a root post:
