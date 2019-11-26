@@ -36,7 +36,7 @@
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-prettier": "3.1.1",
     "jest": "24.9.0",
-    "keep-a-changelog": "0.8.1",
+    "keep-a-changelog": "0.8.3",
     "moment": "2.24.0",
     "numeral": "2.0.6",
     "prettier": "1.19.1",
