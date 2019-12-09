@@ -22,7 +22,7 @@
   "devDependencies": {
     "@babel/core": "7.7.5",
     "@babel/plugin-transform-runtime": "7.7.6",
-    "@babel/preset-env": "7.7.5",
+    "@babel/preset-env": "7.7.6",
     "@babel/runtime": "7.7.6",
     "@types/chrome": "0.0.91",
     "archiver": "3.1.1",
