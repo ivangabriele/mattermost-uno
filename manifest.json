@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Mattermost Uno",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "description": "Unofficial extension bringing some Slack-like features into Mattermost.",
   "background": {
     "scripts": [
