@@ -1088,10 +1088,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/chrome@0.0.107":
-  version "0.0.107"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.107.tgz#0719eff4fa4424e034621a2b772545a966364526"
-  integrity sha512-7z/4YkJu4B8ROxZhbzIx5olbRJqzoDdAoMhSzcJlElsZzv2eTxsvxNkN/QFq0ClbAFNkFf07XVoTrWFHD12QyA==
+"@types/chrome@0.0.112":
+  version "0.0.112"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.112.tgz#fd2a8fd9a410435c79eca2a52ddacddc5bdf9a14"
+  integrity sha512-VJjHiDuF4Xmcn1DuOnGcrMDiGBvoJnaIE6u3ZkhsSz2L16HhnfqIuuM8EAvgQa0ODbNpotHqtPRTKpYoNfpAqQ==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
@@ -5453,10 +5453,10 @@ rollup-pluginutils@^2.5.0, rollup-pluginutils@^2.8.1:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.9.0.tgz#6b09bf82b68351417269b333e4bb2624ebd1e148"
-  integrity sha512-a3fLsmHUbO2OCE/Qp1aM8PtqnCWHysc9QfYs4PIGbUDraeNMH1v0uT7nqQeDB3IfDjNNLl8H2Z7UKs0q1SbK1g==
+rollup@2.10.2:
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.10.2.tgz#9adfcf8ab36861b5b0f8ca7b436f5866e3e9e200"
+  integrity sha512-tivFM8UXBlYOUqpBYD3pRktYpZvK/eiCQ190eYlrAyrpE/lzkyG2gbawroNdbwmzyUc7Y4eT297xfzv0BDh9qw==
   optionalDependencies:
     fsevents "~2.1.2"
 
