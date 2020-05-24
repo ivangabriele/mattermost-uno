@@ -1088,10 +1088,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/chrome@0.0.112":
-  version "0.0.112"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.112.tgz#fd2a8fd9a410435c79eca2a52ddacddc5bdf9a14"
-  integrity sha512-VJjHiDuF4Xmcn1DuOnGcrMDiGBvoJnaIE6u3ZkhsSz2L16HhnfqIuuM8EAvgQa0ODbNpotHqtPRTKpYoNfpAqQ==
+"@types/chrome@0.0.114":
+  version "0.0.114"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.114.tgz#8ceb33fa261f4b9e307fa7344ba8182d8d410d4e"
+  integrity sha512-i7qRr74IrxHtbnrZSKUuP5Uvd5EOKwlwJq/yp7+yTPihOXnPhNQO4Z5bqb1XTnrjdbUKEJicaVVbhcgtRijmLA==
   dependencies:
     "@types/filesystem" "*"
     "@types/har-format" "*"
@@ -2455,10 +2455,10 @@ eslint-visitor-keys@^1.1.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.1.0.tgz#e2a82cea84ff246ad6fb57f9bde5b46621459ec2"
   integrity sha512-8y9YjtM1JBJU/A9Kc+SbaOV4y29sSWckBwMHa+FGtVj5gN/sbnKDf6xJUl+8g7FAij9LVaP8C24DUiH/f/2Z9A==
 
-eslint@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.0.0.tgz#c35dfd04a4372110bd78c69a8d79864273919a08"
-  integrity sha512-qY1cwdOxMONHJfGqw52UOpZDeqXy8xmD0u8CT6jIstil72jkhURC704W8CFyTPDPllz4z4lu0Ql1+07PG/XdIg==
+eslint@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.1.0.tgz#d9a1df25e5b7859b0a3d86bb05f0940ab676a851"
+  integrity sha512-DfS3b8iHMK5z/YLSme8K5cge168I8j8o1uiVmFCgnnjxZQbCGyraF8bMl7Ju4yfBmCuxD7shOF7eqGkcuIHfsA==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.10.0"
@@ -4384,10 +4384,10 @@ mkdirp@^1.0.3:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-moment@2.25.3:
-  version "2.25.3"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.25.3.tgz#252ff41319cf41e47761a1a88cab30edfe9808c0"
-  integrity sha512-PuYv0PHxZvzc15Sp8ybUCoQ+xpyPWvjOuK72a5ovzp2LI32rJXOiIfyoFoYvG3s6EwwrdkMyWuRiEHSZRLJNdg==
+moment@2.26.0:
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.26.0.tgz#5e1f82c6bafca6e83e808b30c8705eed0dcbd39a"
+  integrity sha512-oIixUO+OamkUkwjhAVE18rAMfRJNsNe/Stid/gwHSOfHrOtw9EhAY2AHvdKZ/k/MggcYELFCJz/Sn2pL8b8JMw==
 
 move-file@^2.0.0:
   version "2.0.0"
@@ -5454,10 +5454,10 @@ rollup-pluginutils@^2.5.0, rollup-pluginutils@^2.8.1:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@2.10.2:
-  version "2.10.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.10.2.tgz#9adfcf8ab36861b5b0f8ca7b436f5866e3e9e200"
-  integrity sha512-tivFM8UXBlYOUqpBYD3pRktYpZvK/eiCQ190eYlrAyrpE/lzkyG2gbawroNdbwmzyUc7Y4eT297xfzv0BDh9qw==
+rollup@2.10.9:
+  version "2.10.9"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.10.9.tgz#17dcc6753c619efcc1be2cf61d73a87827eebdf9"
+  integrity sha512-dY/EbjiWC17ZCUSyk14hkxATAMAShkMsD43XmZGWjLrgFj15M3Dw2kEkA9ns64BiLFm9PKN6vTQw8neHwK74eg==
   optionalDependencies:
     fsevents "~2.1.2"
 
