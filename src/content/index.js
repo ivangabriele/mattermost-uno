@@ -46,7 +46,7 @@ window.addEventListener(
     // And the a loop is in progress, we clear it:
     if (loopId !== -1) window.clearTimeout(loopId);
   },
-  false
+  false,
 );
 
 /**
@@ -219,7 +219,7 @@ async function loop() {
       count: Number($rootPostCounter.innerText),
       id: $post.id,
       updatedAt: 0,
-      theme: postTheme
+      theme: postTheme,
     });
   });
 

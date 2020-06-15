@@ -39,7 +39,7 @@
     "keep-a-changelog": "0.10.1",
     "moment": "2.26.0",
     "numeral": "2.0.6",
-    "prettier": "1.19.1",
+    "prettier": "2.0.5",
     "ramda": "0.27.0",
     "rimraf": "3.0.2",
     "rollup": "2.16.1",
