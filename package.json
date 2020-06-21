@@ -51,7 +51,7 @@
     "rollup-plugin-node-resolve": "5.2.0"
   },
   "resolutions": {
-    "kind-of": ">=6.0.3"
+    "kind-of": "6.0.3"
   },
   "browserslist": [
     "chrome 73",
