@@ -5081,10 +5081,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.1.1.tgz#d9485dd5e499daa6cb547023b87a6cf51bee37d6"
-  integrity sha512-9bY+5ZWCfqj3ghYBLxApy2zf6m+NJo5GzmLTpr9FsApsfjriNnS2dahWReHMi7qNPhhHl9SYHJs2cHZLgexNIw==
+prettier@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.1.2.tgz#3050700dae2e4c8b67c4c3f666cdb8af405e1ce5"
+  integrity sha512-16c7K+x4qVlJg9rEbXl7HEGmQyZlG4R9AgP+oHKRMsMsuk8s+ATStlf1NpDqyBI1HpVyfjLOeMhH2LvuNvV5Vg==
 
 pretty-format@^26.4.2:
   version "26.4.2"
@@ -5532,10 +5532,10 @@ rollup-pluginutils@^2.5.0, rollup-pluginutils@^2.8.1:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@2.26.11:
-  version "2.26.11"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.26.11.tgz#4fc31de9c7b83d50916fc8395f8c3d24730cdaae"
-  integrity sha512-xyfxxhsE6hW57xhfL1I+ixH8l2bdoIMaAecdQiWF3N7IgJEMu99JG+daBiSZQjnBpzFxa0/xZm+3pbCdAQehHw==
+rollup@2.27.1:
+  version "2.27.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.27.1.tgz#372744e1d36eba0fd942d997600c2fc2ca266305"
+  integrity sha512-GiWHQvnmMgBktSpY/1+nrGpwPsTw4b9P28og2uedfeq4JZ16rzAmnQ5Pm/E0/BEmDNia1ZbY7+qu3nBgNa19Hg==
   optionalDependencies:
     fsevents "~2.1.2"
 
