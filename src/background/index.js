@@ -38,9 +38,16 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (status !== "complete") return;
 
   const { url } = tab;
+
+  let mattermost_url = browser.storage.sync.get("mattermost_url");
+  mattermost_url.then(mm_url => addContent(mm_url, tabId, url), error => console.log(`Error: ${error}`));
+});
+
+function addContent(res, tabId, url) {
   if (
     url === undefined ||
-    !/^https:\/\/([^/]+\.mattermost|mattermost\.[^/]+|[^/]+\.mattermost\.[^/]+)/.test(url)
+    (res.mattermost_url !== ""  && !url.startsWith(res.mattermost_url)) ||
+    (res.mattermost_url === "" && !/^https:\/\/([^/]+\.mattermost|mattermost\.[^/]+|[^/]+\.mattermost\.[^/]+)/.test(url))
   )
     return;
 
@@ -48,4 +55,4 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     chrome.tabs.insertCSS(tabId, { file: "content.css" });
     chrome.tabs.executeScript(tabId, { file: "content.js" });
   }
-});
+};

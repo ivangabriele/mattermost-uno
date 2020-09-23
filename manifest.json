@@ -12,9 +12,18 @@
     "default_title": "Mattermost Uno is disabled on this site.",
     "default_icon": "icons/icon-32x32-bw.png"
   },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{bf9b59a1-eccf-4f1c-88f5-a20ebebc4a0b}"
+    }
+  },
   "permissions": [
     "https://*/*",
-    "tabs"
+    "tabs",
+    "storage"
   ],
   "icons": {
     "16": "icons/icon-16x16.png",
