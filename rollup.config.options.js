@@ -11,8 +11,8 @@ export default {
   output: [
     {
       file: "./dist/options.js",
-      format: "iife"
-    }
+      format: "iife",
+    },
   ],
 
   plugins: [
@@ -20,14 +20,14 @@ export default {
 
     // Copy stylesheet:
     copy({
-      targets: [{ src: "./src/options/options.html", dest: "./dist" }]
+      targets: [{ src: "./src/options/options.html", dest: "./dist" }],
     }),
 
     ...(NODE_ENV !== "development"
       ? [
           // Calculate output bundle size:
-          filesize()
+          filesize(),
         ]
-      : [])
-  ]
+      : []),
+  ],
 };
