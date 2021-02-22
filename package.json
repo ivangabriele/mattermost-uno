@@ -20,11 +20,11 @@
     "postversion": "git push origin HEAD && git push --tags"
   },
   "devDependencies": {
-    "@babel/core": "7.12.16",
-    "@babel/plugin-transform-runtime": "7.12.15",
-    "@babel/preset-env": "7.12.16",
-    "@babel/runtime": "7.12.13",
-    "@types/chrome": "0.0.130",
+    "@babel/core": "7.12.17",
+    "@babel/plugin-transform-runtime": "7.12.17",
+    "@babel/preset-env": "7.12.17",
+    "@babel/runtime": "7.12.18",
+    "@types/chrome": "0.0.132",
     "archiver": "5.2.0",
     "concurrently": "5.3.0",
     "coveralls": "3.1.0",
@@ -45,7 +45,7 @@
     "rollup": "2.39.0",
     "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-commonjs": "10.1.0",
-    "rollup-plugin-copy": "3.3.0",
+    "rollup-plugin-copy": "3.4.0",
     "rollup-plugin-filesize": "9.1.0",
     "rollup-plugin-json": "4.0.0",
     "rollup-plugin-node-resolve": "5.2.0"
